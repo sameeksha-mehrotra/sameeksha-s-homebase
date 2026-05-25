@@ -13,3 +13,6 @@
 [submodule "trip budgeter"]
 	path = trip budgeter
 	url = https://github.com/sameeksha-mehrotra/trip-planner.git
+[submodule "budget tracker"]
+	path = budget tracker
+	url = https://github.com/sameeksha-mehrotra/monthly-budget-tracker.git
