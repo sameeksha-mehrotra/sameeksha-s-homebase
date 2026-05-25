@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sameeksha's Homebase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+  <style>
+    :root {
+      --bg: #fef9f3;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fff8f2;
+      --text: #1f2937;
+      --text-muted: #6b7280;
+      --border: rgba(0,0,0,0.07);
+      --border-hover: rgba(244,114,182,0.35);
+      --pink: #f472b6;
+      --purple: #a78bfa;
+      --cyan: #38bdf8;
+      --gradient: linear-gradient(135deg, #f472b6 0%, #a78bfa 50%, #38bdf8 100%);
+      --glow: rgba(244,114,182,0.22);
+      --shadow: 0 2px 12px rgba(0,0,0,0.07);
+      --shadow-hover: 0 8px 32px rgba(244,114,182,0.18);
+      --radius: 16px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Ambient orbs ── */
+    .bg-orbs {
+      position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0;
+    }
+    .orb {
+      position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35;
+    }
+    .orb-1 { width: 500px; height: 500px; background: #f472b6; top: -160px; right: -120px; }
+    .orb-2 { width: 400px; height: 400px; background: #a78bfa; bottom: -100px; left: -100px; }
+    .orb-3 { width: 300px; height: 300px; background: #38bdf8; top: 40%; left: 50%; transform: translateX(-50%); opacity: 0.2; }
+
+    /* ── Layout ── */
+    .page { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 60px 24px 80px; }
+
+    /* ── Header ── */
+    header { text-align: center; margin-bottom: 64px; }
+
+    .logo {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      letter-spacing: 0.05em;
+    }
+    .logo span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+    .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tagline {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .section-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    /* ── Grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient);
+      opacity: 0;
+      transition: opacity 0.22s ease;
+      pointer-events: none;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-hover);
+      background: var(--bg-card-hover);
+    }
+    .card:hover::before { opacity: 0.04; }
+
+    .card-top {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+    }
+
+    .card-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .card-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 99px;
+      background: rgba(167,139,250,0.12);
+      color: var(--purple);
+      white-space: nowrap;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      margin-top: 4px;
+    }
+
+    .btn-launch {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 18px;
+      border-radius: 99px;
+      background: var(--gradient);
+      color: white;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      white-space: nowrap;
+    }
+    .btn-launch:hover { opacity: 0.88; transform: scale(1.04); }
+    .btn-launch i { font-size: 0.72rem; }
+
+    .btn-gh {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 14px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.18s ease, border-color 0.18s ease;
+    }
+    .btn-gh:hover { color: var(--text); border-color: rgba(0,0,0,0.2); }
+
+    /* icon bg colours per card */
+    .icon-pink   { background: rgba(244,114,182,0.12); }
+    .icon-purple { background: rgba(167,139,250,0.12); }
+    .icon-cyan   { background: rgba(56,189,248,0.12); }
+    .icon-amber  { background: rgba(251,191,36,0.12); }
+    .icon-green  { background: rgba(52,211,153,0.12); }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      margin-top: 72px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: var(--mono);
+    }
+    footer a { color: var(--pink); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .page { padding: 40px 16px 60px; }
+      h1 { font-size: 2rem; }
+      header { margin-bottom: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="page">
+
+    <header>
+      <div class="logo">&lt;<span>sameeksha mehrotra</span>&gt;</div>
+      <h1>My <span class="gradient-text">Homebase</span></h1>
+      <p class="tagline">All my live projects in one place — click to explore.</p>
+    </header>
+
+    <div class="section-label">
+      <i class="fa-solid fa-rocket" style="font-size:0.7rem; color:var(--pink);"></i>
+      live sites
+    </div>
+
+    <div class="grid">
+
+      <!-- Personal Portfolio -->
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon icon-pink">🧠</div>
+          <span class="card-tag">Portfolio</span>
+        </div>
+        <div>
+          <div class="card-title">Personal Website</div>
+        </div>
+        <p class="card-desc">My main portfolio — experience, projects, skills, and everything about what I do as a TPM and AI/ML enthusiast.</p>
+        <div class="card-footer">
+          <a class="btn-launch" href="https://sameeksha-mehrotra.github.io/" target="_blank" rel="noopener">
+            Launch <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <a class="btn-gh" href="https://github.com/sameeksha-mehrotra/sameeksha-mehrotra.github.io" target="_blank" rel="noopener">
+            <i class="fa-brands fa-github"></i> Repo
+          </a>
+        </div>
+      </div>
+
+      <!-- Internship App Tracker -->
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon icon-purple">📋</div>
+          <span class="card-tag">Productivity</span>
+        </div>
+        <div>
+          <div class="card-title">Internship App Tracker</div>
+        </div>
+        <p class="card-desc">Track every internship application — status, deadlines, contacts — so nothing falls through the cracks during recruiting season.</p>
+        <div class="card-footer">
+          <a class="btn-launch" href="https://sameeksha-mehrotra.github.io/internship-app-tracker/" target="_blank" rel="noopener">
+            Launch <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <a class="btn-gh" href="https://github.com/sameeksha-mehrotra/internship-app-tracker" target="_blank" rel="noopener">
+            <i class="fa-brands fa-github"></i> Repo
+          </a>
+        </div>
+      </div>
+
+      <!-- Stocks Site -->
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon icon-green">📈</div>
+          <span class="card-tag">Finance</span>
+        </div>
+        <div>
+          <div class="card-title">Stock Portfolio Tracker</div>
+        </div>
+        <p class="card-desc">Live stock prices, editable positions, and allocation breakdowns — a personal dashboard for monitoring my investment portfolio.</p>
+        <div class="card-footer">
+          <a class="btn-launch" href="https://sameeksha-mehrotra.github.io/stock-portfolio-/" target="_blank" rel="noopener">
+            Launch <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <a class="btn-gh" href="https://github.com/sameeksha-mehrotra/stock-portfolio-" target="_blank" rel="noopener">
+            <i class="fa-brands fa-github"></i> Repo
+          </a>
+        </div>
+      </div>
+
+      <!-- TPM Career Roadmap -->
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon icon-amber">🗺️</div>
+          <span class="card-tag">Career</span>
+        </div>
+        <div>
+          <div class="card-title">TPM Career Roadmap</div>
+        </div>
+        <p class="card-desc">A command center for navigating the TPM career path — milestones, skills, and resources mapped out from IC to senior leadership.</p>
+        <div class="card-footer">
+          <a class="btn-launch" href="https://sameeksha-mehrotra.github.io/tpm-career-roadmap/" target="_blank" rel="noopener">
+            Launch <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <a class="btn-gh" href="https://github.com/sameeksha-mehrotra/tpm-career-roadmap" target="_blank" rel="noopener">
+            <i class="fa-brands fa-github"></i> Repo
+          </a>
+        </div>
+      </div>
+
+      <!-- Trip Budgeter -->
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon icon-cyan">✈️</div>
+          <span class="card-tag">Travel</span>
+        </div>
+        <div>
+          <div class="card-title">Trip Budgeter</div>
+        </div>
+        <p class="card-desc">Plan trips without the spreadsheet chaos — track destinations, expenses, and split costs across multiple itineraries in one place.</p>
+        <div class="card-footer">
+          <a class="btn-launch" href="https://sameeksha-mehrotra.github.io/trip-planner/" target="_blank" rel="noopener">
+            Launch <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <a class="btn-gh" href="https://github.com/sameeksha-mehrotra/trip-planner" target="_blank" rel="noopener">
+            <i class="fa-brands fa-github"></i> Repo
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <footer>
+      built by <a href="https://sameeksha-mehrotra.github.io/" target="_blank">sameeksha mehrotra</a>
+    </footer>
+
+  </div>
+
+</body>
+</html>
