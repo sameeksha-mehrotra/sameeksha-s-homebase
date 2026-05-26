@@ -4,9 +4,6 @@
 [submodule "sameeksha-website"]
 	path = sameeksha-website
 	url = https://github.com/sameeksha-mehrotra/sameeksha-mehrotra.github.io.git
-[submodule "stocks-site"]
-	path = stocks-site
-	url = https://github.com/sameeksha-mehrotra/stock-portfolio-.git
 [submodule "tpm career roadmap"]
 	path = tpm career roadmap
 	url = https://github.com/sameeksha-mehrotra/tpm-career-roadmap.git
